@@ -1,0 +1,308 @@
+
+
+
+Claim offer
+
+Day 2: Draw Rectangle and Draw Line
+Task 1: Draw Rectangle
+Add this function:
+
+void drawRectangle(char canvas[20][50], int row, int col, int height, int width)
+{
+    for(int i = row; i < row + height; i++)
+    {
+        for(int j = col; j < col + width; j++)
+        {
+            if(i == row || i == row + height - 1 ||
+               j == col || j == col + width - 1)
+            {
+                canvas[i][j] = '*';
+            }
+        }
+    }
+}
+Task 2: Draw Line
+Horizontal Line:
+
+void drawLine(char canvas[20][50], int row, int startCol, int endCol)
+{
+    for(int j = startCol; j <= endCol; j++)
+    {
+        canvas[row][j] = '*';
+    }
+}
+Task 3: Add Menu
+printf("1. Draw Rectangle\n");
+printf("2. Draw Line\n");
+printf("3. Display Canvas\n");
+printf("4. Exit\n");
+Task 4: Call Functions
+Example:
+
+drawRectangle(canvas, 2, 5, 6, 10);
+drawLine(canvas, 12, 5, 20);
+displayCanvas(canvas);
+Expected Output
+..................................................
+.....**********
+.....*........*
+.....*........*
+.....*........*
+.....**********
+
+.....****************
+..................................................
+Git Commands for Day 2
+git add .
+git commit -m "Added rectangle and line drawing functionality"
+git push origin main
+Daily Update
+Implemented rectangle and line drawing features using a 2D character array and updated the menu-driven interface.
+
+
+From first to last
+
+For Day 2, if you want to start from scratch and have a complete working example with Rectangle and Line drawing, use the following:
+
+#include <stdio.h>
+
+#define ROWS 20
+#define COLS 50
+
+void initializeCanvas(char canvas[ROWS][COLS]);
+void displayCanvas(char canvas[ROWS][COLS]);
+void drawRectangle(char canvas[ROWS][COLS], int row, int col, int height, int width);
+void drawLine(char canvas[ROWS][COLS], int row, int startCol, int endCol);
+
+int main()
+{
+    char canvas[ROWS][COLS];
+    int choice;
+
+    initializeCanvas(canvas);
+
+    do
+    {
+        printf("\n===== 2D Graphics Editor =====\n");
+        printf("1. Draw Rectangle\n");
+        printf("2. Draw Line\n");
+        printf("3. Display Canvas\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                drawRectangle(canvas, 2, 5, 6, 12);
+                printf("Rectangle Drawn Successfully!\n");
+                break;
+
+            case 2:
+                drawLine(canvas, 12, 5, 25);
+                printf("Line Drawn Successfully!\n");
+                break;
+
+            case 3:
+                displayCanvas(canvas);
+                break;
+
+            case 4:
+                printf("Exiting...\n");
+                break;
+
+            default:
+                printf("Invalid Choice!\n");
+        }
+
+    } while(choice != 4);
+
+    return 0;
+}
+
+void initializeCanvas(char canvas[ROWS][COLS])
+{
+    for(int i = 0; i < ROWS; i++)
+    {
+        for(int j = 0; j < COLS; j++)
+        {
+            canvas[i][j] = '.';
+        }
+    }
+}
+
+void displayCanvas(char canvas[ROWS][COLS])
+{
+    for(int i = 0; i < ROWS; i++)
+    {
+        for(int j = 0; j < COLS; j++)
+        {
+            printf("%c", canvas[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void drawRectangle(char canvas[ROWS][COLS], int row, int col, int height, int width)
+{
+    for(int i = row; i < row + height; i++)
+    {
+        for(int j = col; j < col + width; j++)
+        {
+            if(i == row || i == row + height - 1 ||
+               j == col || j == col + width - 1)
+            {
+                canvas[i][j] = '*';
+            }
+        }
+    }
+}
+
+void drawLine(char canvas[ROWS][COLS], int row, int startCol, int endCol)
+{
+    for(int j = startCol; j <= endCol; j++)
+    {
+        canvas[row][j] = '*';
+    }
+}
+Steps to Push on GitHub
+Save the file as graphics_editor.c.
+
+Compile:
+
+gcc graphics_editor.c -o graphics_editor
+Run:
+
+./graphics_editor
+Add changes:
+
+git add .
+Commit:
+
+git commit -m "Added rectangle and line drawing functionality"
+Push:
+
+git push origin main
+Day 2 Progress Report
+Implemented rectangle and line drawing features using a 2D character-array canvas. Added menu-driven options and canvas display functionality.
+
+
+The empty output means:
+
+❌ gcc not found
+
+❌ g++ not found
+
+❌ cl not found
+
+So your computer currently does not have a C/C++ compiler available in PATH.
+
+Next question
+Which editor are you using to write C programs?
+
+VS Code
+
+Code::Blocks
+
+Dev-C++
+
+Turbo C
+
+Something else
+
+If you are using VS Code
+You need to install a compiler.
+
+Download and install MSYS2
+
+Open MSYS2 UCRT64 terminal.
+
+Run:
+
+pacman -Syu
+Restart the MSYS2 terminal if asked.
+
+Then run:
+
+pacman -S mingw-w64-ucrt-x86_64-gcc
+Add this folder to Windows PATH:
+
+C:\msys64\ucrt64\bin
+Open a new PowerShell and check:
+
+gcc --version
+You should then see the GCC version.
+
+Tell me which editor you're using, and I'll give the exact installation steps for that setup.
+
+
+pacman : The term 'pacman' is not 
+recognized as the name of a cmdlet, 
+function, script file, or operable 
+program. Check the spelling of the name, 
+or if a path was included, verify that 
+the path is correct and try again.
+At line:1 char:1
++ pacman -Syu
++ ~~~~~~
+    + CategoryInfo          : ObjectNotFo 
+   und: (pacman:String) [], CommandNotFo  
+  undException
+    + FullyQualifiedErrorId : CommandNotF 
+   oundException
+
+That error is expected because MSYS2 is not installed yet. pacman only works inside the MSYS2 terminal after installation.
+
+First, tell me which editor you are using:
+
+VS Code
+
+Code::Blocks
+
+Dev-C++
+
+Something else
+
+Meanwhile, let's check if MinGW is already installed somewhere on your PC.
+
+In PowerShell, run:
+
+dir C:\MinGW
+and
+
+dir C:\msys64
+and send me the output.
+
+Also tell me whether you want to:
+
+Just push code to GitHub (no compiler needed), or
+
+Compile and run C programs on your laptop.
+
+Your GitHub push is already working, so if your goal is only to push Day 2 code, you can edit files and use Git without GCC. The compiler is only needed to run the program.
+
+
+how to download gcc version
+
+To install GCC on Windows, the easiest method is through MSYS2.
+
+Step 1: Download MSYS2
+Go to:
+
+MSYS2 Official Website
+
+Download and install MSYS2 with the default settings.
+
+Step 2: Open MSYS2 UCRT64
+After installation:
+
+Click Start Menu
+
+Open MSYS2 UCRT64
+
+Do not use PowerShell for the next commands.
+
+Step 3: Update MSYS2
+In
+
+

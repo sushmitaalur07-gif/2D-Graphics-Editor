@@ -1,156 +1,126 @@
 #include <stdio.h>
-#include <math.h>
 
-#define ROWS 30
-#define COLS 60
+#define WIDTH 40
+#define HEIGHT 20
 
-char canvas[ROWS][COLS];
+char picture[HEIGHT][WIDTH];
 
-/* Initialize Canvas */
-void initializeCanvas() {
-    for(int i = 0; i < ROWS; i++) {
-        for(int j = 0; j < COLS; j++) {
-            canvas[i][j] = '_';
+// Fill the canvas with '_'
+void initializePicture()
+{
+    int i, j;
+
+    for(i = 0; i < HEIGHT; i++)
+    {
+        for(j = 0; j < WIDTH; j++)
+        {
+            picture[i][j] = '_';
+        }
+    }
+}
+void drawRectangle(int x, int y, int width, int height)
+{
+    int i, j;
+
+    for(i = y; i < y + height; i++)
+    {
+        for(j = x; j < x + width; j++)
+        {
+            picture[i][j] = '*';
+        }
+    }
+}
+void drawLine(int x1, int y1, int x2, int y2)
+{
+    int i;
+
+    if(y1 == y2)
+    {
+        for(i = x1; i <= x2; i++)
+        {
+            picture[y1][i] = '*';
+        }
+    }
+    else if(x1 == x2)
+    {
+        for(i = y1; i <= y2; i++)
+        {
+            picture[i][x1] = '*';
+        }
+    }
+}
+void drawTriangle(int x, int y, int height)
+{
+    int i, j;
+
+    for(i = 0; i < height; i++)
+    {
+        for(j = x - i; j <= x + i; j++)
+        {
+            picture[y + i][j] = '*';
+        }
+    }
+}
+void drawCircle(int centerX, int centerY, int radius)
+{
+    int x, y;
+
+    for(y = 0; y < HEIGHT; y++)
+    {
+        for(x = 0; x < WIDTH; x++)
+        {
+            int dx = x - centerX;
+            int dy = y - centerY;
+
+            if(dx * dx + dy * dy <= radius * radius)
+            {
+                picture[y][x] = '*';
+            }
+        }
+    }
+}
+void deleteRectangle(int x, int y, int width, int height)
+{
+    int i, j;
+
+    for(i = y; i < y + height; i++)
+    {
+        for(j = x; j < x + width; j++)
+        {
+            picture[i][j] = '_';
         }
     }
 }
 
-/* Display Canvas */
-void displayCanvas() {
-    for(int i = 0; i < ROWS; i++) {
-        for(int j = 0; j < COLS; j++) {
-            printf("%c", canvas[i][j]);
+// Display the canvas
+void displayPicture()
+{
+    int i, j;
+
+    for(i = 0; i < HEIGHT; i++)
+    {
+        for(j = 0; j < WIDTH; j++)
+        {
+            printf("%c ", picture[i][j]);
         }
         printf("\n");
     }
 }
 
-/* Draw Rectangle */
-void drawRectangle(int x, int y, int width, int height) {
-    for(int i = y; i < y + height; i++) {
-        for(int j = x; j < x + width; j++) {
-            if(i < ROWS && j < COLS)
-                canvas[i][j] = '*';
-        }
-    }
-}
+int main()
+{
+    printf("2D Graphics Editor Started!\n\n");
 
-/* Draw Horizontal/Vertical Line */
-void drawLine(int x1, int y1, int x2, int y2) {
-    if(y1 == y2) {
-        for(int x = x1; x <= x2; x++)
-            canvas[y1][x] = '*';
-    }
-    else if(x1 == x2) {
-        for(int y = y1; y <= y2; y++)
-            canvas[y][x1] = '*';
-    }
-}
+    initializePicture();
+    drawRectangle(5, 3, 10, 5);
+    drawLine(0, 0, 20, 0);
+    drawLine(25, 2, 25, 12);
+    drawTriangle(15, 5, 5);
 
-/* Draw Triangle */
-void drawTriangle(int x, int y, int height) {
-    for(int i = 0; i < height; i++) {
-        for(int j = -i; j <= i; j++) {
-            if(y + i < ROWS && x + j >= 0 && x + j < COLS)
-                canvas[y + i][x + j] = '*';
-        }
-    }
-}
+    drawCircle(30, 10, 4);
 
-/* Draw Circle */
-void drawCircle(int cx, int cy, int r) {
-    for(int y = 0; y < ROWS; y++) {
-        for(int x = 0; x < COLS; x++) {
-            int dx = x - cx;
-            int dy = y - cy;
-
-            if(dx * dx + dy * dy <= r * r)
-                canvas[y][x] = '*';
-        }
-    }
-}
-
-/* Delete Object Area */
-void deleteObject(int x, int y, int width, int height) {
-    for(int i = y; i < y + height; i++) {
-        for(int j = x; j < x + width; j++) {
-            if(i < ROWS && j < COLS)
-                canvas[i][j] = '_';
-        }
-    }
-}
-
-int main() {
-    int choice;
-
-    initializeCanvas();
-
-    do {
-        printf("\n--- 2D Graphics Editor ---\n");
-        printf("1. Draw Rectangle\n");
-        printf("2. Draw Line\n");
-        printf("3. Draw Triangle\n");
-        printf("4. Draw Circle\n");
-        printf("5. Delete Object\n");
-        printf("6. Display Picture\n");
-        printf("7. Exit\n");
-        printf("Enter Choice: ");
-        scanf("%d", &choice);
-
-        switch(choice) {
-            case 1: {
-                int x,y,w,h;
-                printf("Enter x y width height: ");
-                scanf("%d%d%d%d",&x,&y,&w,&h);
-                drawRectangle(x,y,w,h);
-                break;
-            }
-
-            case 2: {
-                int x1,y1,x2,y2;
-                printf("Enter x1 y1 x2 y2: ");
-                scanf("%d%d%d%d",&x1,&y1,&x2,&y2);
-                drawLine(x1,y1,x2,y2);
-                break;
-            }
-
-            case 3: {
-                int x,y,h;
-                printf("Enter x y height: ");
-                scanf("%d%d%d",&x,&y,&h);
-                drawTriangle(x,y,h);
-                break;
-            }
-
-            case 4: {
-                int cx,cy,r;
-                printf("Enter centerX centerY radius: ");
-                scanf("%d%d%d",&cx,&cy,&r);
-                drawCircle(cx,cy,r);
-                break;
-            }
-
-            case 5: {
-                int x,y,w,h;
-                printf("Enter x y width height to delete: ");
-                scanf("%d%d%d%d",&x,&y,&w,&h);
-                deleteObject(x,y,w,h);
-                break;
-            }
-
-            case 6:
-                displayCanvas();
-                break;
-
-            case 7:
-                printf("Exiting...\n");
-                break;
-
-            default:
-                printf("Invalid Choice!\n");
-        }
-
-    } while(choice != 7);
+    deleteRectangle(7, 4, 3, 2);
+    displayPicture();
 
     return 0;
 }
